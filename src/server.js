@@ -34,28 +34,36 @@ const aiResponseSchema = z.object({
 });
 
 app.post('/audit', async (req, res) => {
+  const parsedRequest = auditRequestSchema.safeParse(req.body);
+  if (!parsedRequest.success) {
+    return res.status(400).json({ error: 'Validation error', details: parsedRequest.error.errors });
+  }
+
   try {
-    // Validate request
-    const { url } = auditRequestSchema.parse(req.body);
+    const { url } = parsedRequest.data;
 
     const html = await fetchPage(url);
     const metrics = extractMetrics(html, url);
     const ai = await aiAnalyze(metrics);
 
     // Validate AI response
-    const validatedAi = aiResponseSchema.parse(ai.ai);
+    const validatedAi = aiResponseSchema.safeParse(ai.ai);
+    if (!validatedAi.success) {
+      return res.status(502).json({
+        error: 'AI output validation failed',
+        details: validatedAi.error.errors,
+        metrics,
+        aiInsights: ai
+      });
+    }
 
     res.json({
       metrics,
-      aiInsights: { ...ai, ai: validatedAi }
+      aiInsights: { ...ai, ai: validatedAi.data }
     });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      res.status(400).json({ error: 'Validation error', details: error.errors });
-    } else {
-      console.error('Audit failed', error);
-      res.status(500).json({ error: error?.message || 'unexpected error', details: error?.stack });
-    }
+    console.error('Audit failed', error);
+    res.status(500).json({ error: error?.message || 'unexpected error', details: error?.stack });
   }
 });
 

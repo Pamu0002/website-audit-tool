@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { extractMetrics } from './scraper.js';
 
 describe('extractMetrics', () => {

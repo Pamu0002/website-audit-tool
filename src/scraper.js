@@ -6,9 +6,10 @@ import { URL } from 'url';
 export async function fetchPage(url) {
   try {
     const response = await axios.get(url, {
-      timeout: 15000,
-      headers: { 'User-Agent': 'AI-Website-Audit/1.0' },
-      httpsAgent: new https.Agent({ rejectUnauthorized: false })
+      timeout: 30000,
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+      httpsAgent: new https.Agent({ rejectUnauthorized: false, keepAlive: false }),
+      maxRedirects: 5
     });
     return response.data;
   } catch (error) {
@@ -51,7 +52,10 @@ export function extractMetrics(html, pageUrl) {
   const externalLinks = allLinks.length - internalLinks;
 
   const images = $('img').toArray();
-  const missingAlt = images.filter(img => !($(img).attribs.alt || '').trim()).length;
+  const missingAlt = images.filter(img => {
+    const altText = $(img).attr('alt') || '';
+    return !altText.trim();
+  }).length;
 
   const title = $('head title').text().trim();
   const description = $('meta[name="description"]').attr('content') || '';
