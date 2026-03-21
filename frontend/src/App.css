@@ -27,6 +27,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: linear-gradient(135deg, #0f172a 0%, #1a2139 50%, #111827 100%);
 }
 
 body {
@@ -34,6 +35,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color: var(--text-primary);
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
 #root {
@@ -44,7 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(to bottom, rgba(0, 217, 255, 0.03), transparent);
+  background: linear-gradient(135deg, #0f172a 0%, #1a2139 50%, #111827 100%);
 }
 
 /* Header */
