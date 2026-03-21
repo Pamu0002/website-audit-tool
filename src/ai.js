@@ -1,9 +1,6 @@
-import dotenv from 'dotenv';
 import fs from 'fs';
 import OpenAI from 'openai';
 import { z } from 'zod';
-
-dotenv.config();
 
 function getAiClientConfig() {
   const provider = (process.env.AI_PROVIDER || 'openai').toLowerCase();
@@ -97,7 +94,7 @@ export async function aiAnalyze(metrics) {
           ? 'Set GROQ_API_KEY (and AI_PROVIDER=groq) to a valid key and restart the server.'
           : 'Set OPENAI_API_KEY to a valid key and restart the server.'
       ],
-      warning: provider === 'groq' ? 'No Groq API key' : 'No OpenAI API key'
+      warning: `No ${provider === 'groq' ? 'Groq' : 'OpenAI'} API key. [DEBUG: provider='${provider}', GROQ_KEY=${!!process.env.GROQ_API_KEY}, OPENAI_KEY=${!!process.env.OPENAI_API_KEY}]`
     };
     return ({ prompt: '', rawResponse: '', ai: fallback });
   }

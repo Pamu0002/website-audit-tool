@@ -1,11 +1,9 @@
 import cors from 'cors';
-import dotenv from 'dotenv';
 import express from 'express';
 import { z } from 'zod';
 import { aiAnalyze } from './ai.js';
+import './config.js'; // Load env vars FIRST, before any other imports!
 import { extractMetrics, fetchPage } from './scraper.js';
-
-dotenv.config();
 
 const app = express();
 app.use(cors({

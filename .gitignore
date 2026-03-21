@@ -3,5 +3,10 @@ node_modules/
 logs/
 *.log
 .DS_Store
-.env
-logs/prompt-trace.jsonl
+# Test files with potential secrets
+test-*.js
+test*.json
+audit*.json
+console.log*
+out.json
+test_*.txt
