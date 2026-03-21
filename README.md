@@ -106,6 +106,12 @@ Each log entry includes:
 }
 ```
 
+## ⚠️ IMPORTANT: API Key Setup Required
+
+**The `.env` file is NOT in Git** (for security reasons). When you clone this repository, you MUST create your own `.env` file with either a Groq or OpenAI API key for the tool to work.
+
+See [SETUP.md](SETUP.md) for detailed instructions on obtaining a free API key.
+
 ## Setup
 1. Install dependencies:
 ```bash
