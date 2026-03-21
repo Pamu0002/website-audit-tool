@@ -1,3 +1,4 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import { z } from 'zod';
@@ -7,6 +8,11 @@ import { extractMetrics, fetchPage } from './scraper.js';
 dotenv.config();
 
 const app = express();
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
 
 // Schema for audit request
