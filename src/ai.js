@@ -1,8 +1,22 @@
 import fs from 'fs';
 import OpenAI from 'openai';
+import { z } from 'zod';
 
 const apiKey = process.env.OPENAI_API_KEY;
 const openai = apiKey ? new OpenAI({ apiKey }) : null;
+
+// Schema for AI response
+const aiResponseSchema = z.object({
+  analysis: z.object({
+    seo: z.string(),
+    messaging: z.string(),
+    cta: z.string(),
+    depth: z.string(),
+    ux: z.string()
+  }),
+  recommendations: z.array(z.string()),
+  warning: z.string().optional()
+});
 
 function makeSystemPrompt() {
   return `You are a precise AI that analyzes website audit metrics and returns structured JSON grounded in the facts.
@@ -54,8 +68,14 @@ export async function aiAnalyze(metrics) {
 
   try {
     parsed = JSON.parse(rawText);
+    // Validate with zod
+    parsed = aiResponseSchema.parse(parsed);
   } catch (error) {
-    // in case model returns plain text, keep defaults.
+    if (error instanceof z.ZodError) {
+      parsed.warning = `AI response validation failed: ${error.message}`;
+    } else {
+      parsed.warning = 'Unable to parse JSON from AI response. See rawResponse in logs.';
+    }
   }
 
   return {
