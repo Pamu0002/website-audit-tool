@@ -119,7 +119,7 @@ echo "PORT=3000" >> .env
 # Option B: OpenAI (Paid)
 echo "OPENAI_API_KEY=your-key-here" > .env
 echo "PORT=3000" >> .env
-
+ 
 # 4. Start backend
 npm start
 # Output: Server running on http://localhost:3000
@@ -146,6 +146,49 @@ curl -X POST http://localhost:3000/audit \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com"}'
 ```
+
+---
+
+## ⚠️ Security Notice: API Keys & Environment Variables
+
+### Why .env is NOT in Git
+
+- `.env` file is **protected by `.gitignore`** ✅
+- **Never contains secrets** that get pushed to GitHub
+- **Each user creates their own** `.env` locally
+- **API keys are sensitive** and must be kept private
+
+### Getting Your Own API Key
+
+**Groq (Recommended - Free):**
+1. Go to https://console.groq.com/
+2. Sign up (free account)
+3. Get API key from dashboard
+4. Add to `.env`: `GROQ_API_KEY=gsk_xxxxxxxxxxxxx`
+
+**OpenAI (Paid):**
+1. Go to https://platform.openai.com/api/keys
+2. Create new API key
+3. Add to `.env`: `OPENAI_API_KEY=sk_xxxxxxxxxxxxx`
+
+### .env Template (For Reference)
+
+```bash
+# Copy this template and fill in YOUR OWN API key
+GROQ_API_KEY=gsk_xxxxxxxxxxxxx
+AI_PROVIDER=groq
+PORT=3000
+NODE_ENV=development
+```
+
+### Important: What's Committed vs. Not Committed
+
+| File/Item | In Git? | Status |
+|-----------|---------|--------|
+| `.env` (actual file) | ❌ NO | Git-ignored (protected) |
+| `.gitignore` | ✅ YES | Tells Git to ignore `.env` |
+| API key code examples | ✅ YES | Instructions only (no real keys) |
+| Source code | ✅ YES | No secrets hardcoded |
 
 ---
 
