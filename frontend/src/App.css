@@ -291,8 +291,9 @@ body {
 
 .meta-item {
   padding: 1rem;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   border-radius: 0.75rem;
+  border-left: 4px solid var(--primary);
 }
 
 .meta-item label {
@@ -407,7 +408,7 @@ body {
   width: 32px;
   height: 32px;
   background: linear-gradient(135deg, var(--success), var(--primary));
-  color: rgba(0, 217, 255, 0.15);
+  color: white;
   border-radius: 50%;
   font-weight: 700;
   font-size: 0.9rem;
