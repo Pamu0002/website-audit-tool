@@ -92,6 +92,41 @@ Perfect for **web agencies**, **marketing teams**, and **content strategists** a
 
 ---
 
+---
+
+## ☁️ Deployed Application
+
+🌐 **Live URL**: https://website-audit-tool.vercel.app  
+(Deployed on Vercel - Frontend + Backend combined)
+
+**Status**: ✅ Ready to use now!  
+- **Frontend**: https://website-audit-tool.vercel.app/  
+- **API**: https://website-audit-tool.vercel.app/api/  
+
+### Start Using Immediately (No Setup Required)
+```
+👉 Open: https://website-audit-tool.vercel.app/
+👉 Enter any website URL
+👉 Click "Run Audit"
+```
+
+### Deploy Your Own Instance
+
+```bash
+# 1. Install Vercel CLI
+npm install -g vercel
+
+# 2. Deploy to Vercel
+vercel
+
+# 3. Set Environment Variables in Vercel Dashboard:
+# - GROQ_API_KEY or OPENAI_API_KEY = your_key_here
+# - AI_PROVIDER = groq (or openai)  
+# - NODE_ENV = production
+```
+
+---
+
 ## Quick Start
 
 ### Prerequisites
@@ -99,53 +134,99 @@ Perfect for **web agencies**, **marketing teams**, and **content strategists** a
 - Git
 - API Key (Groq or OpenAI) - see [SETUP.md](SETUP.md)
 
-### Install & Run (5 minutes)
+### Option 1: Use Live Deployment (Easiest - No Setup)
 
+```
+✅ No installation needed
+✅ Start immediately:
+
+🌐 https://website-audit-tool.vercel.app/
+```
+
+### Option 2: Run Locally (Developer Mode)
+
+**Step 1: Clone & Install**
 ```bash
-# 1. Clone repository
 git clone https://github.com/Pamu0002/website-audit-tool.git
 cd website-audit-tool
-
-# 2. Install backend dependencies
 npm install
+cd frontend && npm install && cd ..
+```
 
-# 3. Create .env file (choose one):
+**Step 2: Create .env File with API Key**
 
-# Option A: Groq (Free, Recommended)
-echo "GROQ_API_KEY=your-key-here" > .env
-echo "AI_PROVIDER=groq" >> .env
-echo "PORT=3000" >> .env
+Option A: Groq (Free - Recommended)
+```bash
+cat > .env << EOF
+GROQ_API_KEY=your-api-key-here
+AI_PROVIDER=groq
+PORT=3000
+NODE_ENV=development
+EOF
+```
 
-# Option B: OpenAI (Paid)
-echo "OPENAI_API_KEY=your-key-here" > .env
-echo "PORT=3000" >> .env
- 
-# 4. Start backend
+Option B: OpenAI (Paid)
+```bash
+cat > .env << EOF
+OPENAI_API_KEY=your-api-key-here
+AI_PROVIDER=openai
+PORT=3000
+NODE_ENV=development
+EOF
+```
+
+**Step 3: Start Backend & Frontend**
+
+```bash
+# Terminal 1: Start Backend
 npm start
 # Output: Server running on http://localhost:3000
 
-# 5. In another terminal, start frontend
+# Terminal 2: Start Frontend (new terminal)
 cd frontend
-npm install
 npm run dev
 # Output: Local: http://localhost:5173
 ```
 
-### Test It
-
-**Via Web UI (Recommended):**
+**Step 4: Open in Browser**
 ```
-Open: http://localhost:5173
-Enter URL: https://example.com
-Click "Run Audit"
+http://localhost:5173
 ```
 
-**Via API:**
+### Test the Application
+
+**Via Web UI:**
+```
+1. Open http://localhost:5173 (local) or https://website-audit-tool.vercel.app (live)
+2. Enter website URL
+3. Click "Run Audit"
+4. View results
+```
+
+**Via API (curl):**
 ```bash
 curl -X POST http://localhost:3000/audit \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com"}'
 ```
+
+### Development Commands
+
+```bash
+npm run dev      # Development with hot-reload
+npm run build    # Build for production
+npm test         # Run all tests
+npm run lint     # Lint code
+```
+
+### Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| Port 3000 already in use | Change `.env` PORT=3001 |
+| Cannot find module errors | Run `npm install` again |
+| API key invalid | Verify `.env` file has correct key |
+| Frontend won't load | Ensure backend running on 3000, frontend on 5173 |
 
 ---
 
